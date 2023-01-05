@@ -142,3 +142,4 @@ function iniciar(direccion = "https://pokeapi.co/api/v2/pokemon/") {
 iniciar();
 
 
+
