@@ -94,12 +94,31 @@ function mostrarListadoPokemones(listadoPokemones){
 
 function cambiarPagina(e){
     //console.log(e.srcElement.innerText);
-    if(e.srcElement.innerText === "Pagina siguiente"){
-        iniciar()
+    if(e.srcElement.innerText === "Pagina siguiente" && datos.next != null){
+        $listadoPokemones = document.querySelector("#listadoPokemones");
+        $habilidades = document.querySelector("#habilidades");
+        $experiencia = document.querySelector("#experiencia");
+        $foto = document.querySelector("#foto");
+        $listadoPokemones.innerHTML = "";
+        $habilidades.innerHTML = "";
+        $experiencia.innerHTML = "";
+        $foto.src = "";
+        iniciar(datos.next);
+    }
+    if(e.srcElement.innerText === "Pagina anterior" && datos.previous!= null){
+        $listadoPokemones = document.querySelector("#listadoPokemones");
+        $habilidades = document.querySelector("#habilidades");
+        $experiencia = document.querySelector("#experiencia");
+        $foto = document.querySelector("#foto");
+        $listadoPokemones.innerHTML = "";
+        $habilidades.innerHTML = "";
+        $experiencia.innerHTML = "";
+        $foto.src = "";
+        iniciar(datos.previous);
     }
 }
 
-function cargarAnteriorYSiguiente(paginaAnterior, paginaSiguiente){
+function cargarAnteriorYSiguiente(){
     $paginaAnterior = document.querySelector("#paginaAnterior");
     $paginaAnterior.onclick = cambiarPagina;
     $paginaSiguiente = document.querySelector("#paginaSiguiente");
@@ -107,15 +126,15 @@ function cargarAnteriorYSiguiente(paginaAnterior, paginaSiguiente){
 
 }
 
-function iniciar() {
-  fetch("https://pokeapi.co/api/v2/pokemon/")
+function iniciar(direccion = "https://pokeapi.co/api/v2/pokemon/") {
+  fetch(direccion)
     .then((response) => response.json())
     .then((data) => {
       datos = data;
       //console.log(datos);
       mostrarTotalPokemones(datos.count);
       mostrarListadoPokemones(datos.results);
-      cargarAnteriorYSiguiente(datos.previous, datos.next);
+      cargarAnteriorYSiguiente();
     });
 
 }
